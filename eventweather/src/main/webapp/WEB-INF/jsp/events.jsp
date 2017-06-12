@@ -24,15 +24,20 @@
 
 </head>
 <body>
+	<div class="jumbotron">
+		<h1>EventWeather</h1>
+		<p>Events and weather forecast</p>
+	</div>
 	<ul class="nav nav-tabs" role="tablist">
-		<c:forEach items="${events}" var="category">
-			<li role="presentation"><a href="#${category.key}"
-				aria-controls="${category.key}" role="tab" data-toggle="tab">${category.key}</a></li>
+		<c:forEach items="${events}" var="category" varStatus="status">
+			<li role="presentation" ${status.first ? 'class="active"' : ''}>
+				<a href="#${category.key}" aria-controls="${category.key}" role="tab" data-toggle="tab">${category.key}</a>
+			</li>
 		</c:forEach>
 	</ul>
 	<div class="tab-content">
-		<c:forEach items="${events}" var="category">
-			<div role="tabpanel" class="tab-pane" id="${category.key }">
+		<c:forEach items="${events}" var="category" varStatus="categoryStatus">
+			<div role="tabpanel" class="tab-pane${categoryStatus.first ? ' active' : ''}" id="${category.key}">
 				<c:forEach items="${category.value}" var="event">
 					<div class="panel panel-default">
 						<div class="panel-heading">${event.title}</div>
