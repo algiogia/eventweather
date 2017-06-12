@@ -1,49 +1,53 @@
 package org.ivavin.eventweather;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ivavin.eventweather.model.Event;
 import org.ivavin.eventweather.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class AppController {
 
-  private final EventService eventService;
-  private List<String> categories;
+	@Autowired
+	private final EventService eventService;
 
-  public AppController(EventService newEventService) {
-    eventService = newEventService;
-  }
+	public AppController(final EventService eventService) {
+		this.eventService = eventService;
+	}
 
-  @RequestMapping("/")
-  public String events(Map<String, Object> model) {
-    model.put("message", getEvents());
-    return "events";
-  }
+	@RequestMapping("/")
+	public String events(final Map<String, Object> model) {
+		model.put("events", getEvents());
+		return "events";
+	}
 
-  public void setCategories(List<String> newCategories) {
-    if (newCategories != null) {
-      categories = new ArrayList<String>(newCategories);
-    }
-  }
+	private Map<String, List<Event>> getEvents() {
 
-  private Map<String, List<Event>> getEvents() {
+		Map<String, List<Event>> result = new LinkedHashMap<String, List<Event>>();
+		List<String> categories = getCategories();
+		if (categories.isEmpty()) {
+			result.put("all", eventService.getEvents("london", null));
+		} else {
+			for (String category : categories) {
+				result.put(category, eventService.getEvents("london", category));
+			}
+		}
 
-    Map<String, List<Event>> result = new LinkedHashMap<String, List<Event>>();
+		return result;
+	}
 
-    if (categories.isEmpty()) {
-      result.put("all", eventService.getEvents("location", null));
-    } else {
-      for (String category : categories) {
-        result.put(category, eventService.getEvents("location", category));
-      }
-    }
+	/**
+	 * Returns a fixed list of categories but could invoke a service to retrieve
+	 * them.
+	 */
+	private List<String> getCategories() {
 
-    return result;
-  }
+		return Arrays.asList("music", "food", "comedy");
+	}
 }
