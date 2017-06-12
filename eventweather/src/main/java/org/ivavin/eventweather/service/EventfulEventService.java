@@ -1,5 +1,6 @@
 package org.ivavin.eventweather.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -97,7 +98,7 @@ public class EventfulEventService implements EventService {
 
 	@Override
 	public List<String> getCategories() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO
+		return new ArrayList<String>();
 	}
 }
