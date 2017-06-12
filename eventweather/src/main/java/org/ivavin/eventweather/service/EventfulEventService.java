@@ -97,7 +97,7 @@ public class EventfulEventService implements EventService {
 
 	@Override
 	public List<String> getCategories() {
-		// TODO
-		return new ArrayList<String>();
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
