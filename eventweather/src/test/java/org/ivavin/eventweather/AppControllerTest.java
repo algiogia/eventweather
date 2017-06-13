@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ivavin.eventweather.exception.EventServiceExcception;
+import org.ivavin.eventweather.exception.EventServiceException;
 import org.ivavin.eventweather.model.Event;
 import org.ivavin.eventweather.service.EventService;
 import org.junit.Test;
@@ -30,15 +30,14 @@ public class AppControllerTest {
 	EventService eventService = mock(EventService.class);
 
 	@Test
-	public void test() throws EventServiceExcception {
+	public void test() throws EventServiceException {
 
+		List<String> categories = Arrays.asList("music", "food", "comedy");
 		List<Event> musicEvents = Arrays.asList(MUSIC_EVENT_1, MUSIC_EVENT_2);
 		List<Event> foodEvents = Arrays.asList(FOOD_EVENT_1, FOOD_EVENT_2);
 		List<Event> comedyEvents = Arrays.asList(COMEDY_EVENT_1, COMEDY_EVENT_2);
-		// List<Event> allEvents = Arrays.asList(MUSIC_EVENT_1, MUSIC_EVENT_2,
-		// FOOD_EVENT_1, FOOD_EVENT_2, COMEDY_EVENT_1,
-		// COMEDY_EVENT_2);
 
+		when(eventService.getCategories()).thenReturn(categories);
 		when(eventService.getEvents("london", "music")).thenReturn(musicEvents);
 		when(eventService.getEvents("london", "food")).thenReturn(foodEvents);
 		when(eventService.getEvents("london", "comedy")).thenReturn(comedyEvents);
@@ -58,9 +57,9 @@ public class AppControllerTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testServiceUnavailable() throws EventServiceExcception {
+	public void testServiceUnavailable() throws EventServiceException {
 
-		when(eventService.getEvents(anyString(), anyString())).thenThrow(EventServiceExcception.class);
+		when(eventService.getEvents(anyString(), anyString())).thenThrow(EventServiceException.class);
 
 		AppController appController = new AppController(eventService);
 		Map<String, Object> model = new HashMap<>();

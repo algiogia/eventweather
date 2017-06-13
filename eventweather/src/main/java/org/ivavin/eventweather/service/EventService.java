@@ -2,7 +2,7 @@ package org.ivavin.eventweather.service;
 
 import java.util.List;
 
-import org.ivavin.eventweather.exception.EventServiceExcception;
+import org.ivavin.eventweather.exception.EventServiceException;
 import org.ivavin.eventweather.model.Event;
 
 /**
@@ -24,12 +24,12 @@ public interface EventService {
 	 *            optional search parameters
 	 * @return a list of {@link Event}s
 	 */
-	List<Event> getEvents(String location, String category, String... queryParams) throws EventServiceExcception;
+	List<Event> getEvents(String location, String category, String... queryParams) throws EventServiceException;
 
 	/**
 	 * Returns the list of available categories
 	 *
 	 * @return a list of Strings
 	 */
-	List<String> getCategories() throws EventServiceExcception;
+	List<String> getCategories() throws EventServiceException;
 }

@@ -1,12 +1,11 @@
 package org.ivavin.eventweather;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.ivavin.eventweather.exception.EventServiceExcception;
+import org.ivavin.eventweather.exception.EventServiceException;
 import org.ivavin.eventweather.model.Event;
 import org.ivavin.eventweather.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +28,14 @@ public class AppController {
 	public String events(final Map<String, Object> model) {
 		try {
 			model.put("events", getEvents());
-		} catch (EventServiceExcception ex) {
+		} catch (EventServiceException ex) {
 			LOG.error("Unable to retrieve the events", ex);
 			model.put("error", "There was a problem while getting the list of event. Please try again later");
 		}
 		return "events";
 	}
 
-	private Map<String, List<Event>> getEvents() throws EventServiceExcception {
+	private Map<String, List<Event>> getEvents() throws EventServiceException {
 
 		Map<String, List<Event>> result = new LinkedHashMap<String, List<Event>>();
 		List<String> categories = getCategories();
@@ -54,9 +53,11 @@ public class AppController {
 	/**
 	 * Returns a fixed list of categories but could invoke a service to retrieve
 	 * them.
+	 * 
+	 * @throws EventServiceException
 	 */
-	private List<String> getCategories() {
+	private List<String> getCategories() throws EventServiceException {
 
-		return Arrays.asList("music", "food", "comedy");
+		return eventService.getCategories();
 	}
 }

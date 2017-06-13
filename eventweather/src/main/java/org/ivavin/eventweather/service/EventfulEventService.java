@@ -1,11 +1,11 @@
 package org.ivavin.eventweather.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ivavin.eventweather.exception.EventServiceException;
 import org.ivavin.eventweather.model.Event;
 import org.ivavin.eventweather.model.EventResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +45,20 @@ public class EventfulEventService implements EventService {
 	}
 
 	@Override
-	public List<Event> getEvents(final String location, final String category, final String... queryParams) {
-		EventResponse eventResponse = restTemplate.getForObject(buildRequestURL(location, category, queryParams),
-				EventResponse.class);
-
-		List<Event> events = eventResponse.getEvents().getEvent();
-		if (StringUtils.isNotBlank(category)) {
-			setCategory(events, category);
+	public List<Event> getEvents(final String location, final String category, final String... queryParams)
+			throws EventServiceException {
+		try {
+			EventResponse eventResponse = restTemplate.getForObject(buildRequestURL(location, category, queryParams),
+					EventResponse.class);
+			List<Event> events = eventResponse.getEvents().getEvent();
+			if (StringUtils.isNotBlank(category)) {
+				setCategory(events, category);
+			}
+			return events;
+		} catch (Exception e) {
+			throw new EventServiceException("", e);
 		}
-		return events;
+
 	}
 
 	private void setCategory(final List<Event> events, final String category) {
@@ -98,7 +103,7 @@ public class EventfulEventService implements EventService {
 
 	@Override
 	public List<String> getCategories() {
-		// TODO
-		return new ArrayList<String>();
+		/* Returning an hard-coded set of categories for now */
+		return Arrays.asList("music", "food", "comedy");
 	}
 }
