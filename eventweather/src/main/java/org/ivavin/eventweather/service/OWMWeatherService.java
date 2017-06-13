@@ -53,7 +53,7 @@ public class OWMWeatherService implements WeatherService {
 	}
 
 	private String buildRequestURL(final String location) {
-		String result = API_URL + "?appid=" + appId + "&location=" + location + "&units=metric";
+		String result = API_URL + "?appid=" + appId + "&q=" + location + "&units=metric";
 
 		return result;
 	}
