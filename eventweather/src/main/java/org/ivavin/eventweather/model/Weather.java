@@ -2,6 +2,9 @@ package org.ivavin.eventweather.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Weather implements Serializable {
 
 	private static final long serialVersionUID = -8736723502262608114L;
