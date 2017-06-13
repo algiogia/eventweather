@@ -1,5 +1,6 @@
 package org.ivavin.eventweather.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -96,6 +97,7 @@ public class EventfulEventService implements EventService {
 			if (converter instanceof MappingJackson2HttpMessageConverter) {
 				MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
 				jsonConverter.setObjectMapper(new ObjectMapper());
+				jsonConverter.getObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 				jsonConverter.setSupportedMediaTypes(Collections.unmodifiableList(jsonMediaTypes));
 			}
 		}
@@ -106,4 +108,5 @@ public class EventfulEventService implements EventService {
 		/* Returning an hard-coded set of categories for now */
 		return Arrays.asList("music", "food", "comedy");
 	}
+
 }

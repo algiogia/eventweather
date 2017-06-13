@@ -1,8 +1,10 @@
 package org.ivavin.eventweather.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event implements Serializable {
@@ -11,7 +13,8 @@ public class Event implements Serializable {
 
 	private String url;
 	private String id;
-	private String start_time;
+	@JsonProperty("start_time")
+	private Date startTime;
 	private String title;
 	private String description;
 	private String category;
@@ -22,11 +25,11 @@ public class Event implements Serializable {
 	public Event() {
 	}
 
-	public Event(final String url, final String id, final String start_time, final String title,
-			final String description, final String category) {
+	public Event(final String url, final String id, final Date startTime, final String title, final String description,
+			final String category) {
 		this.url = url;
 		this.id = id;
-		this.start_time = start_time;
+		this.startTime = startTime;
 		this.title = title;
 		this.description = description;
 		this.category = category;
@@ -48,12 +51,12 @@ public class Event implements Serializable {
 		this.id = id;
 	}
 
-	public String getStart_time() {
-		return start_time;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setStart_time(final String start_time) {
-		this.start_time = start_time;
+	public void setStartTime(final Date startTime) {
+		this.startTime = startTime;
 	}
 
 	public String getTitle() {
@@ -98,7 +101,7 @@ public class Event implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Event [url=" + url + ", id=" + id + ", start_time=" + start_time + ", title=" + title + ", description="
+		return "Event [url=" + url + ", id=" + id + ", start_time=" + startTime + ", title=" + title + ", description="
 				+ description + ", category=" + category + ", cityName=" + cityName + ", forecast=+ " + forecast + "]";
 	}
 
@@ -109,7 +112,7 @@ public class Event implements Serializable {
 		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((start_time == null) ? 0 : start_time.hashCode());
+		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
 		result = prime * result + ((cityName == null) ? 0 : cityName.hashCode());
@@ -149,11 +152,11 @@ public class Event implements Serializable {
 		} else if (!id.equals(other.id)) {
 			return false;
 		}
-		if (start_time == null) {
-			if (other.start_time != null) {
+		if (startTime == null) {
+			if (other.startTime != null) {
 				return false;
 			}
-		} else if (!start_time.equals(other.start_time)) {
+		} else if (!startTime.equals(other.startTime)) {
 			return false;
 		}
 		if (title == null) {
