@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.ivavin.eventweather.exception.EventServiceExcception;
 import org.ivavin.eventweather.model.Event;
 import org.ivavin.eventweather.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AppController {
+
+	private static final Logger LOG = Logger.getLogger(AppController.class.getName());
 
 	@Autowired
 	private final EventService eventService;
@@ -23,11 +27,16 @@ public class AppController {
 
 	@RequestMapping("/")
 	public String events(final Map<String, Object> model) {
-		model.put("events", getEvents());
+		try {
+			model.put("events", getEvents());
+		} catch (EventServiceExcception ex) {
+			LOG.error("Unable to retrieve the events", ex);
+			model.put("error", "There was a problem while getting the list of event. Please try again later");
+		}
 		return "events";
 	}
 
-	private Map<String, List<Event>> getEvents() {
+	private Map<String, List<Event>> getEvents() throws EventServiceExcception {
 
 		Map<String, List<Event>> result = new LinkedHashMap<String, List<Event>>();
 		List<String> categories = getCategories();
