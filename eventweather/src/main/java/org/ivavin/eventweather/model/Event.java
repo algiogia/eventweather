@@ -16,6 +16,8 @@ public class Event implements Serializable {
 	private String description;
 	private String category;
 
+	private Forecast forecast;
+
 	public Event() {
 	}
 
@@ -77,10 +79,18 @@ public class Event implements Serializable {
 		this.category = category;
 	}
 
+	public Forecast getForecast() {
+		return forecast;
+	}
+
+	public void setForecast(final Forecast forecast) {
+		this.forecast = forecast;
+	}
+
 	@Override
 	public String toString() {
 		return "Event [url=" + url + ", id=" + id + ", start_time=" + start_time + ", title=" + title + ", description="
-				+ description + ", category=" + category + "]";
+				+ description + ", category=" + category + ", forecast=+ " + forecast + "]";
 	}
 
 	@Override
