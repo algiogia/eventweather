@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ivavin.eventweather.model.Forecast;
+import org.ivavin.eventweather.model.ForecastResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,9 +24,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Ivano
  *
  */
+@Service
 public class OWMWeatherService implements WeatherService {
 
-	private static final String baseURL = "";
+	private static final String API_URL = "http://api.openweathermap.org/data/2.5/forecast";
 
 	private final RestTemplate restTemplate;
 	private final String appId;
@@ -37,9 +40,22 @@ public class OWMWeatherService implements WeatherService {
 	}
 
 	@Override
-	public List<Forecast> getWeather(final String location) {
+	public List<Forecast> getWeather(final String location) throws WeatherServiceException {
 
-		return null;
+		try {
+			ForecastResponse forecastResponse = restTemplate.getForObject(buildRequestURL(location),
+					ForecastResponse.class);
+			return forecastResponse.getList();
+		} catch (Exception e) {
+			throw new WeatherServiceException("Unable to restrieve weather forecast", e);
+		}
+
+	}
+
+	private String buildRequestURL(final String location) {
+		String result = API_URL + "?appid=" + appId + "&location=" + location + "&units=metric";
+
+		return result;
 	}
 
 	/**

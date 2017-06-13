@@ -40,8 +40,13 @@
 			<div role="tabpanel" class="tab-pane${categoryStatus.first ? ' active' : ''}" id="${category.key}">
 				<c:forEach items="${category.value}" var="event">
 					<div class="panel panel-default">
-						<div class="panel-heading">${event.title}</div>
+						<div class="panel-heading">${event.title} - ${event.startTime}</div>
 						<div class="panel-body">${event.description}</div>
+						<div>
+						<c:if test="${event.forecast != null}">
+						  Weather forecast: ${event.forecast.description}, temperature ${event.forecast.temp}C, humidity ${event.forecast.humidity}
+						</c:if>
+						</div>
 					</div>
 				</c:forEach>
 			</div>

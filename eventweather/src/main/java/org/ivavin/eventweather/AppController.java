@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.ivavin.eventweather.exception.EventServiceException;
 import org.ivavin.eventweather.model.Event;
+import org.ivavin.eventweather.model.EventForecast;
 import org.ivavin.eventweather.model.Forecast;
 import org.ivavin.eventweather.service.EventService;
 import org.ivavin.eventweather.service.WeatherService;
@@ -68,10 +69,11 @@ public class AppController {
 
 		try {
 			List<Forecast> forecasts = weatherService.getWeather(LOCATION);
-
-			for (List<Event> events : eventsByCategory.values()) {
-				for (Event event : events) {
-					setForecast(event, forecasts);
+			if (forecasts != null) {
+				for (List<Event> events : eventsByCategory.values()) {
+					for (Event event : events) {
+						setForecast(event, forecasts);
+					}
 				}
 			}
 		} catch (WeatherServiceException e) {
@@ -92,8 +94,9 @@ public class AppController {
 			if (distance <= MAX_DAYS_GAP) {
 				if (distance < minDistance || minDistance == -1) {
 					minDistance = distance;
+					event.setForecast(new EventForecast(forecast.getWeather().get(0).getDescription(),
+							forecast.getMain().getTemp(), forecast.getMain().getHumidity()));
 				}
-				event.setForecast(forecast);
 			}
 		}
 	}

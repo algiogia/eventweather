@@ -1,6 +1,7 @@
 package org.ivavin.eventweather.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,9 +18,10 @@ public class Forecast implements Serializable {
 
 	private Main main;
 
-	private final java.util.List<Weather> weather = null;
+	private final List<Weather> weather;
 
 	public Forecast() {
+		weather = new ArrayList<>();
 	}
 
 	public Date getDate() {

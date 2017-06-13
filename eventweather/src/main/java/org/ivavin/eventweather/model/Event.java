@@ -20,7 +20,7 @@ public class Event implements Serializable {
 	private String category;
 	private String cityName;
 
-	private Forecast forecast;
+	private EventForecast forecast;
 
 	public Event() {
 	}
@@ -91,11 +91,11 @@ public class Event implements Serializable {
 		this.cityName = cityName;
 	}
 
-	public Forecast getForecast() {
+	public EventForecast getForecast() {
 		return forecast;
 	}
 
-	public void setForecast(final Forecast forecast) {
+	public void setForecast(final EventForecast forecast) {
 		this.forecast = forecast;
 	}
 

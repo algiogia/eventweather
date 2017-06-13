@@ -17,6 +17,8 @@ import java.util.Map;
 import org.ivavin.eventweather.exception.EventServiceException;
 import org.ivavin.eventweather.model.Event;
 import org.ivavin.eventweather.model.Forecast;
+import org.ivavin.eventweather.model.Main;
+import org.ivavin.eventweather.model.Weather;
 import org.ivavin.eventweather.service.EventService;
 import org.ivavin.eventweather.service.WeatherService;
 import org.ivavin.eventweather.service.WeatherServiceException;
@@ -79,8 +81,14 @@ public class AppControllerTest {
 	private static final Forecast DAY_3 = new Forecast();
 	static {
 		DAY_1.setDate(DATE_1);
+		DAY_1.setMain(new Main());
+		DAY_1.getWeather().add(new Weather());
 		DAY_2.setDate(DATE_2);
+		DAY_2.setMain(new Main());
+		DAY_2.getWeather().add(new Weather());
 		DAY_3.setDate(DATE_3);
+		DAY_3.setMain(new Main());
+		DAY_3.getWeather().add(new Weather());
 	}
 
 	EventService eventService = mock(EventService.class);

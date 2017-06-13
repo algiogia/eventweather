@@ -3,6 +3,7 @@ package org.ivavin.eventweather.service;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -52,6 +53,7 @@ public class EventfulEventService implements EventService {
 			EventResponse eventResponse = restTemplate.getForObject(buildRequestURL(location, category, queryParams),
 					EventResponse.class);
 			List<Event> events = eventResponse.getEvents().getEvent();
+			events.sort(Comparator.comparing(Event::getStartTime));
 			if (StringUtils.isNotBlank(category)) {
 				setCategory(events, category);
 			}
