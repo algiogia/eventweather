@@ -1,10 +1,10 @@
 package org.ivavin.eventweather.service;
 
-import java.util.Date;
+import java.util.List;
 
-import org.ivavin.eventweather.model.Weather;
+import org.ivavin.eventweather.model.Forecast;
 
 public interface WeatherService {
 
-	Weather getWeather(String location, Date date);
+	List<Forecast> getWeather(String location) throws WeatherServiceException;
 }
