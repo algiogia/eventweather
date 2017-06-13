@@ -15,6 +15,7 @@ public class Event implements Serializable {
 	private String title;
 	private String description;
 	private String category;
+	private String cityName;
 
 	private Forecast forecast;
 
@@ -79,6 +80,14 @@ public class Event implements Serializable {
 		this.category = category;
 	}
 
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(final String cityName) {
+		this.cityName = cityName;
+	}
+
 	public Forecast getForecast() {
 		return forecast;
 	}
@@ -90,7 +99,7 @@ public class Event implements Serializable {
 	@Override
 	public String toString() {
 		return "Event [url=" + url + ", id=" + id + ", start_time=" + start_time + ", title=" + title + ", description="
-				+ description + ", category=" + category + ", forecast=+ " + forecast + "]";
+				+ description + ", category=" + category + ", cityName=" + cityName + ", forecast=+ " + forecast + "]";
 	}
 
 	@Override
@@ -103,6 +112,7 @@ public class Event implements Serializable {
 		result = prime * result + ((start_time == null) ? 0 : start_time.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((cityName == null) ? 0 : cityName.hashCode());
 		return result;
 	}
 
@@ -158,6 +168,13 @@ public class Event implements Serializable {
 				return false;
 			}
 		} else if (!url.equals(other.url)) {
+			return false;
+		}
+		if (cityName == null) {
+			if (other.cityName != null) {
+				return false;
+			}
+		} else if (!cityName.equals(other.cityName)) {
 			return false;
 		}
 		return true;
